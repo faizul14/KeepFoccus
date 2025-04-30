@@ -1,3 +1,7 @@
+@keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 @font-face {
         font-family: shoikafont;
         src: url("font/Shoika/Shoika\ Medium\ Italic.ttf");
@@ -27,6 +31,7 @@
       height: 100vh;
       text-align: center;
       color: #333;
+      /* animation: fadeIn 1.2s ease-in; */
     }
 
     h2 {
@@ -50,7 +55,7 @@
     }
     .head-content {
         text-align: start;
-        font-size: 1.2em;
+        font-size: 2em;
     }
     .content-content {
         width: 70%;
