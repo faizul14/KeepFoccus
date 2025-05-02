@@ -9,10 +9,8 @@ function injectTensorFlow(callback) {
     // Gunakan versi terbaru TensorFlow.js
     // script.src = "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js";
     script.src = chrome.runtime.getURL("tf.min.js");
-    console.log("Loading TensorFlow.js from:", script.src); // Debug path
     script.onload = () => {
         tfLoaded = true;
-        console.log("TensorFlow.js loaded!", tf?.version?.tfjs);
         callback();
     };
     script.onerror = () => {
@@ -26,11 +24,8 @@ async function loadModelIfNeeded() {
 
     try {
         await tf.ready();
-        console.log("TF ready, loading model...");
         const modelPath = chrome.runtime.getURL('model/model.json');
-        console.log("Loading model from:", modelPath); // Debug path
         model = await tf.loadLayersModel(modelPath);
-        console.log("Model loaded:", model);
     } catch (e) {
         console.error("Gagal load model:", e); // Lebih detail
         console.error(e);
@@ -67,6 +62,8 @@ async function predictFromImage(dataUrl) {
     try {
         const prediction = m.predict(tensor);
         const result = await prediction.data();
+        tf.dispose();
+        prediction?.dispose?.();
         const confidence = result[0];
 
         console.log("Prediction:", result);
