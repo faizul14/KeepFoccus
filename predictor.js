@@ -90,7 +90,6 @@ chrome.runtime.onMessage.addListener((message) => {
 
     if (message.action === "predict" && message.dataUrl) {
         const pageKey = "checked_" + location.href;
-        alert(pageKey)
 
         if (sessionStorage.getItem(pageKey)) {
             showSavePopup("✅ Enjoy you'r browsing.")
