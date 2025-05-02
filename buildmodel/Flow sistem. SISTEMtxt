@@ -1,0 +1,7 @@
+graph TD
+A[User buka tab baru] --> B{Viewport aktif}
+B --> C[Capture visible area (dataUrl)]
+C --> D[Prediksi via ML Model]
+D --> E{Konten Porn?}
+E -- Ya --> F[Redirect atau Block]
+E -- Tidak --> G[Lanjut akses]

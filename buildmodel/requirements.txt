@@ -1,0 +1,6 @@
+# Link google collab: https://colab.research.google.com/drive/1hISzHzBdTlEW18DOAGJxrDzddNq1CMdT#scrollTo=2mgo5eey3iAT
+ipykernel
+tensorflow
+opencv-python
+matplotlib
+numpy

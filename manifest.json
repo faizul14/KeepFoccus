@@ -4,13 +4,30 @@
   "version": "1.0",
   "description": "block websites to save brain.",
   "permissions": [
-    "webRequest",
-    "webRequestBlocking",
-    "<all_urls>"
+  "tabs",
+  "activeTab",
+  "storage",
+  "scripting",
+  "webRequest",
+  "webRequestBlocking",
+  "<all_urls>"
   ],
   "background": {
-    "scripts": ["codebg.js"],
+    "scripts": ["background.js"],
     "persistent": true
   },
-  "web_accessible_resources": ["redirect.html", "listblock.json"]
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["tf.min.js","predictor.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    "predictor.js",
+    "tf.min.js",
+    "tfjs_model/**",
+    "model/**",
+    "blockpage"
+  ]
 }
