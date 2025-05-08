@@ -24,10 +24,16 @@
     }
   ],
   "web_accessible_resources": [
+    "popup.js",
     "predictor.js",
     "tf.min.js",
     "tfjs_model/**",
     "model/**",
     "blockpage"
-  ]
+  ],
+  "browser_action": {
+  "default_popup": "popup.html",
+  "default_title": "Save Your Brain"
+}
+
 }

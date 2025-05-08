@@ -102,9 +102,25 @@ chrome.runtime.onMessage.addListener((message) => {
     }
 });
 
-window.addEventListener("load", () => {
-    chrome.runtime.sendMessage({ action: "capture" });
+chrome.storage.local.get("enabled", (data) => {
+    if (data.enabled === false) {
+        console.log("❌ Ekstensi dinonaktifkan");
+        return;
+    }
+
+    // lanjutkan prediksi
+    // injectTensorFlow(() => {
+    //     predictFromImage(message.dataUrl);
+    // });
+    window.addEventListener("load", () => {
+        chrome.runtime.sendMessage({ action: "capture" });
+    });
 });
+
+// window.addEventListener("load", () => {
+//     chrome.runtime.sendMessage({ action: "capture" });
+// });
+
 
 function showSavePopup(message, positive = true) {
     const popup = document.createElement("div");
@@ -129,3 +145,4 @@ function showSavePopup(message, positive = true) {
         setTimeout(() => popup.remove(), 500);
     }, 4000); // tampil 2 detik
 }
+
