@@ -83,8 +83,7 @@ async function predictFromImage(dataUrl) {
 }
 
 // Dengarkan pesan dari background.js
-chrome.runtime.onMessage.addListener((message) => {
-
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "predict" && message.dataUrl) {
         const pageKey = "checked_" + location.href;
 
@@ -98,7 +97,11 @@ chrome.runtime.onMessage.addListener((message) => {
                 predictFromImage(message.dataUrl);
             });
         }
-
+    } else if (message.action === "onChange") {
+        const isEnabled = message.value;
+        if (isEnabled === false) {
+            showSavePopup("❌ Ekstensi telah dinonaktifkan", false);
+        }
     }
 });
 
@@ -108,22 +111,18 @@ chrome.storage.local.get("enabled", (data) => {
         return;
     }
 
-    // lanjutkan prediksi
-    // injectTensorFlow(() => {
-    //     predictFromImage(message.dataUrl);
-    // });
     window.addEventListener("load", () => {
         chrome.runtime.sendMessage({ action: "capture" });
     });
 });
 
-// window.addEventListener("load", () => {
-//     chrome.runtime.sendMessage({ action: "capture" });
-// });
-
-
 function showSavePopup(message, positive = true) {
+    // Hapus semua popup yang sudah ada
+    const existingPopups = document.querySelectorAll('.save-brain-popup');
+    existingPopups.forEach(popup => popup.remove());
+
     const popup = document.createElement("div");
+    popup.className = 'save-brain-popup'; // Tambahkan class untuk identifikasi
     popup.innerText = message;
     popup.style.position = "fixed";
     popup.style.top = "20px";
@@ -137,12 +136,13 @@ function showSavePopup(message, positive = true) {
     popup.style.fontSize = "16px";
     popup.style.fontFamily = "sans-serif";
     popup.style.transition = "opacity 0.5s ease";
+    popup.style.opacity = "1"; // Pastikan opacity dimulai dari 1
 
     document.body.appendChild(popup);
 
     setTimeout(() => {
         popup.style.opacity = "0";
         setTimeout(() => popup.remove(), 500);
-    }, 4000); // tampil 2 detik
+    }, 4000); // tampil 4 detik
 }
 
